@@ -5,9 +5,9 @@ import re
 import pandas as pd
 import uuid
 
-#/Users/rachelforbes/opt/anaconda3/bin/python3 /Users/rachelforbes/Desktop/TwitData/scrapingTwitter.py
+#/Users/rachelforbes/opt/anaconda3/bin/python3 /Users/rachelforbes/Desktop/Tweet/scrapingTwitter.py
 
-def search_for_hashtags(consumer_key, consumer_secret, access_token, access_token_secret, hashtag_phrase, n_tweets):
+def search_for_hashtags(consumer_key, consumer_secret, access_token, access_token_secret, n_tweets):
     
     #authentication for accessing Twitter
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -18,7 +18,7 @@ def search_for_hashtags(consumer_key, consumer_secret, access_token, access_toke
     
     rows = []
     #for each tweet matching our hashtags, write relevant info to the spreadsheet
-    for tweet in tweepy.Cursor(api.search, q=hashtag_phrase+' -filter:retweets', 
+    for tweet in tweepy.Cursor(api.search, q="inaugeration-filter:retweets", 
                                    lang="en", tweet_mode='extended').items(n_tweets):
     #print(str(tweet))
         row = [tweet.created_at, tweet.full_text.replace('\n',' ').encode('utf-8'), tweet.user.screen_name.encode('utf-8'),
@@ -30,15 +30,14 @@ consumer_key = input('Consumer Key: ')
 consumer_secret = input('Consumer Secret: ')
 access_token = input('Access Token: ')
 access_token_secret = input('Access Token Secret: ')
-hashtag_phrase = input('Hashtag Phrase: ') # include '#' when searching for hashtag
+#hashtag_phrase = input('Hashtag Phrase: ') # include '#' when searching for hashtag
 n_tweets = int(input('Number of Tweets: '))
 
 
 rows_df = search_for_hashtags(consumer_key=consumer_key, 
                               consumer_secret=consumer_secret, 
                               access_token_secret=access_token_secret, 
-                              access_token=access_token, 
-                              hashtag_phrase=hashtag_phrase, 
+                              access_token=access_token,
                               n_tweets=n_tweets)
 
 
@@ -46,7 +45,7 @@ rows_df.columns = ['timestamp', 'tweet_text', 'username', 'all_hashtags', 'follo
 
 rows_df.head()
 
-rows_df.to_csv('tweets.csv') #not saving to wd bc python issue
+rows_df.to_csv('tweets.csv') 
 
 
 """
