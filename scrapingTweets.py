@@ -46,16 +46,4 @@ rows_df.head()
 rows_df.to_csv('tweets.csv') 
 
 
-"""
-from pyspark import SparkContext 
-from pyspark.sql import SQLContext 
-from pyspark.sql import functions as F
-import pandas as pd 
-sc=SparkContext()
-sqlc=SQLContext(sc) 
-df=pd.read_csv(<YOUR PATH HERE>) 
-sdf=sqlc.createDataFrame(df) 
-
-"""
-
     
